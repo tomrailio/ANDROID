@@ -14,6 +14,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
 public class MainActivity extends AppCompatActivity {
  //definition of class variables
  ListView listView;
@@ -26,7 +27,9 @@ public class MainActivity extends AppCompatActivity {
  EditText number;
  ArrayList contacts;
  ArrayAdapter<String> adapter;
+ 
  //START of auxiliary methods
+ 
  private void filterContacts(String filter) {
  //method that filters the contacts based on filter String
  List result = new ArrayList();//we create an empty list where the 
@@ -50,7 +53,9 @@ to
 list
  }
  }
+ 
  //we set the adapter to the new contacts array
+ 
  adapter = new ArrayAdapter<String>(this,
  android.R.layout.simple_list_item_1, 
 android.R.id.text1, (String[]) result.toArray(new 
@@ -60,7 +65,9 @@ String[result.size()]));
 the interface is updated
  }
  }
+ 
  //Method to check whether a name exists already in contacts arrayList
+ 
  public boolean nameExists(String name, ArrayList contacts) {
  for (int i = 0; i < contacts.size(); i++) {
  if (contacts.get(i).toString().contains(name)) {
@@ -69,10 +76,12 @@ the interface is updated
  }
  return false;
  }
+ 
  @Override
  protected void onCreate(Bundle savedInstanceState) {
  super.onCreate(savedInstanceState);
  setContentView(R.layout.activity_main);
+ 
  //we get the elements from the interface and put them in JAVA 
 objects
  listView = (ListView) findViewById(R.id._dynamic);
@@ -90,19 +99,23 @@ listItem);
  astrArr = 
 getResources().getStringArray(R.array.array_technology);
  contacts = new ArrayList<String>(Arrays.asList(astrArr));
+ 
  //we set a listener on the add button
  addBtn.setOnClickListener(new View.OnClickListener() {
  @Override
  public void onClick(View v) {
+ 
  //we get the name and phone number the user inputted
  String contactName = name.getText().toString();
  String contactNumber = number.getText().toString();
  if (nameExists(contactName, contacts)) {
+ 
  //if the name is already in the contacts list we show 
 a toast notification
  Toast.makeText(getApplicationContext(), "Contact 
 already in phonebook", Toast.LENGTH_SHORT).show();
  } else {
+ 
  //now we add them to the contacts string ;
 String[] newContactArr = new String[astrArr.length + 
 1];
@@ -111,10 +124,12 @@ String[] newContactArr = new String[astrArr.length +
  }
 newContactArr[newContactArr.length - 1] = contactName 
 + " " + contactNumber;
+ 
  //we modify our contact list to incorporate the new 
 contact
  contacts.add(newContactArr[newContactArr.length -
 1]);
+ 
  //we modify the adapter
 adapter = new 
 ArrayAdapter<String>(searchView.getContext(),
@@ -123,6 +138,7 @@ android.R.id.text1, contacts);
  listView.setAdapter(adapter);
  adapter.notifyDataSetChanged();
  }
+ 
  // we clear both text fields but we could set a 
 placeholder text as well
  name.getText().clear();
@@ -135,9 +151,10 @@ SearchView.OnQueryTextListener() {
  public boolean onQueryTextSubmit(String query) {
  return false;
  }
+ 
  @Override
  public boolean onQueryTextChange(String newText) {
- //tracks changes made to the text field
+  //tracks changes made to the text field
 if (searchView.getQuery().toString().length() == 0) 
 {//this detects the closing of the searchView
  String[] newContacts = new String[contacts.size()];
@@ -154,6 +171,7 @@ adapter.notifyDataSetChanged();
  }
  }
 );
+ 
  /* //This is a listener set on each individual item
  listView.setOnItemClickListener(new AdapterView.OnItemClickListener() 
 {
@@ -176,3 +194,6 @@ searchView.getQuery().toString();
  });
  }
 }
+
+
+
